@@ -19,3 +19,8 @@ Starting The Scheduler
 When using the scheduler, you only need to add the following Cron entry to your server. If you do not know how to add Cron entries to your server, consider using a service such as Laravel Forge which can manage the Cron entries for you:
 
 * * * * * cd /path-to-your-project && php artisan schedule:run >> /dev/null 2>&1
+
+
+Not realized, but needed
+ - error exception on send to MailChimp function
+ - 
