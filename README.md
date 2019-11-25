@@ -23,4 +23,4 @@ When using the scheduler, you only need to add the following Cron entry to your 
 
 Not realized, but needed
  - error exception on send to MailChimp function
- - 
+ - Subscriber facade make fake Users with bad email such as example, thats doesn't sends to Mailchimp
