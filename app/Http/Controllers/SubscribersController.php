@@ -4,6 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Subscribers;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Input;
+use Session;
+
 
 class SubscribersController extends Controller
 {
@@ -42,26 +46,29 @@ class SubscribersController extends Controller
      */
     public function store(Request $request)
     {
-        $subscribers= new \App\Subscribers;
-
-        $validatedData = $request->validate([
-            'name' => 'required',
+        $rules = array(
+            'name'       => 'required',
+            'email'      => 'required|email',
             'surname' => 'required',
-            'email' => 'required',
-        ]);
-        $subscribers->name=$validatedData['name'];
-        $subscribers->surname=$validatedData['surname'];
-        $subscribers->email=$validatedData['email'];
-        $subscribers->status=$request->get('status');
-        $subscribers->status=($subscribers->status == NULL)? 0: 1;
-        // $subscribers->name=$request->get('name');
-        // $subscribers->surname=$request->get('surname');
-        // $subscribers->email=$request->get('email');
-        // $subscribers->status=$request->get('status');
-
-        $subscribers->save();
+        );
+        $validator = Validator::make($request->all(), $rules);
         
-        return redirect('subscribers')->with('success', 'Information has been added');
+        if ($validator->fails()) {
+            return Redirect::to('subscribers/create')
+                ->withErrors($validator);
+        } else {
+            $subscribers= new \App\Subscribers;
+            $subscribers->name= $request->get('name');
+            $subscribers->surname= $request->get('surname');
+            $subscribers->email= $request->get('email');
+            $subscribers->status=$request->get('status');
+            $subscribers->status=( $subscribers->status == NULL ) ? 0 : 1;
+            $subscribers->save();
+        }
+
+        Session::flash('message', 'Successfully updated nerd!');
+        
+        return redirect('subscribers'); //->with('success', 'Information has been added')
     }
 
     /**
@@ -72,7 +79,7 @@ class SubscribersController extends Controller
      */
     public function show(Subscribers $subscribers)
     {
-        //
+        $this->edit( $subscribers );
     }
 
     /**
@@ -81,10 +88,13 @@ class SubscribersController extends Controller
      * @param  \App\Subscribers  $subscribers
      * @return \Illuminate\Http\Response
      */
-    public function edit(Subscribers $subscribers)
+    public function edit( $id )
     {
+
+        $subscriber = Subscribers::find($id);
+
         return view('subscribers.edit', [
-            'subscriber'   => $subscribers,
+            'subscriber'   => $subscriber,
         ]);
     }
 

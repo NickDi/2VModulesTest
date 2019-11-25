@@ -3,10 +3,6 @@
 
 @section('title', 'Sites')
 
-@section('sidebar')
-    @parent
-@endsection
-
 @section('content')
 <div class="container-fluid">
       <h2>Adding sucriber</h2><br/>

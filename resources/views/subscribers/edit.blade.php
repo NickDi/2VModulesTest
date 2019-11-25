@@ -1,11 +1,8 @@
 
 @extends('layouts.app')
 
-@section('title', 'Sites')
+@section('title', 'Suscriber Edit')
 
-@section('sidebar')
-    @parent
-@endsection
 
 @section('content')
 <div class="container-fluid">

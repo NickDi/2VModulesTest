@@ -3,10 +3,6 @@
 
 @section('title', 'Subscribers')
 
-@section('sidebar')
-    @parent
-@endsection
-
 @section('content')
    <div class="container-fluid">
     <br />
@@ -38,7 +34,7 @@
         <td>{{$subscriber['email']}}</td>
         <td>{{$subscriber['status']}}</td>
         
-        <td><a href="{{action('SubscribersController@edit', $subscriber)}}" class="btn btn-warning">Edit</a></td>
+        <td><a href="{{action('SubscribersController@edit', $subscriber['id'])}}" class="btn btn-warning">Edit</a></td>
         <td>
           <form action="{{action('SubscribersController@destroy', $subscriber['id'])}}" method="post">
             @csrf
