@@ -12,7 +12,7 @@ class SetAllUserStatus extends Command
      *
      * @var string
      */
-    protected $signature = 'subscribers:status {status=foo}';
+    protected $signature = 'subscribers:status {status=0}';
 
     /**
      * The console command description.
@@ -39,6 +39,6 @@ class SetAllUserStatus extends Command
     public function handle()
     {
         $status = ( $this->argument('status') == 1 )? 1: 0;
-        Subscribers::SetStatusAll( $status );
+        Subscribers::setStatusAll( $status );
     }
 }

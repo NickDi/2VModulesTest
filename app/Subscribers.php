@@ -12,7 +12,7 @@ class Subscribers extends Model
     ];
 
 
-    public static function Check ( $subscriber ){
+    public static function check ( $subscriber ){
         $listId = 'dbf40752bc';
         $emailAddress = $subscriber->email;
         $result = Mailchimp::check($listId, $subscriber->email); // Returns boolean
@@ -25,13 +25,13 @@ class Subscribers extends Model
         //Mailchimp::status($listId, $emailAddress); // Returns 'subscribed', 'unsubscribed', 'cleaned', 'pending', 'transactional' or 'not found'
 
     }
-    public static function CheckAll (){
+    public static function checkAll (){
         $Subscribers= \App\Subscribers::orderBy('name')->get();
         foreach ($Subscribers as $subscriber) {
-            self::Check( $subscriber );
+            self::check( $subscriber );
         }
     }
-    public static function Send (Subscribers $subscriber){
+    public static function send (Subscribers $subscriber){
         // TODO add error exceptions, because subscribe function doesn't return anything
 
     	$listId = 'dbf40752bc';
@@ -40,15 +40,15 @@ class Subscribers extends Model
         Mailchimp::subscribe($listId, $emailAddress, ['FNAME' => $subscriber->name, 'LNAME' => $subscriber->surname], false);
 
     }
-    public static function SendAll (){
+    public static function sendAll (){
         $Subscribers= \App\Subscribers::orderBy('name')->get();
         foreach ($Subscribers as $subscriber) {
-            self::Send( $subscriber );
+            self::send( $subscriber );
                 # code...
         }
     }
 
-    public static function SetStatusAll ($status){
+    public static function setStatusAll ($status){
         $Subscribers= \App\Subscribers::orderBy('name')->get();
         foreach ($Subscribers as $subscriber) {
             $subscriber->status=$status;

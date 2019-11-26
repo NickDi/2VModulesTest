@@ -38,6 +38,6 @@ class CheckSubscribers extends Command
      */
     public function handle()
     {
-        Subscribers::CheckAll();    
+        Subscribers::checkAll();    
     }
 }
