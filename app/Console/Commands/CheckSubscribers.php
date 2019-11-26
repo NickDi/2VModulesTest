@@ -38,6 +38,17 @@ class CheckSubscribers extends Command
      */
     public function handle()
     {
-        Subscribers::checkAll();    
+       // Subscribers::checkAll();
+        $subscribers= \App\Subscribers::orderBy('name')->get();
+        foreach ($subscribers as $subscriber) {
+            $result = \App\Subscribers::check( $subscriber );
+            if ( $result ){
+              $this->info( $subscriber->name. ' ' . $subscriber->surname. ' - in the list' ); 
+             //echo $subscriber->name. ' ' . $subscriber->surname. ' - in the list'. PHP_EOL;
+            }else{
+                $this->info( $subscriber->name. ' ' . $subscriber->surname. ' - not in the list' );
+              // echo $subscriber->name. ' ' . $subscriber->surname. ' - not in the list'. PHP_EOL;
+            }
+        }    
     }
 }

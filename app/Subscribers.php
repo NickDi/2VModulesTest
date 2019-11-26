@@ -21,17 +21,7 @@ class Subscribers extends Model
         //Mailchimp::status($listId, $emailAddress); // Returns 'subscribed', 'unsubscribed', 'cleaned', 'pending', 'transactional' or 'not found'
 
     }
-    public static function checkAll (){
-        $subscribers= \App\Subscribers::orderBy('name')->get();
-        foreach ($subscribers as $subscriber) {
-            $result self::check( $subscriber );
-            if ( $result ){
-              echo $subscriber->name. ' ' . $subscriber->surname. ' - in the list'. PHP_EOL;
-            }else{
-              echo $subscriber->name. ' ' . $subscriber->surname. ' - not in the list'. PHP_EOL;
-            }
-        }
-    }
+
     public static function send (Subscribers $subscriber){
         // TODO add error exceptions, because subscribe function doesn't return anything
 
