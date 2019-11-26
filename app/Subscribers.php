@@ -16,19 +16,20 @@ class Subscribers extends Model
         $listId = 'dbf40752bc';
         $emailAddress = $subscriber->email;
         $result = Mailchimp::check($listId, $subscriber->email); // Returns boolean
-        if ( $result ){
-            echo $subscriber->name. ' ' . $subscriber->surname. ' - in the list'. PHP_EOL;
-        }else{
-            echo $subscriber->name. ' ' . $subscriber->surname. ' - not in the list'. PHP_EOL;
-        }
+        return $result;
         // Check the staus of a subscriber:
         //Mailchimp::status($listId, $emailAddress); // Returns 'subscribed', 'unsubscribed', 'cleaned', 'pending', 'transactional' or 'not found'
 
     }
     public static function checkAll (){
-        $Subscribers= \App\Subscribers::orderBy('name')->get();
-        foreach ($Subscribers as $subscriber) {
-            self::check( $subscriber );
+        $subscribers= \App\Subscribers::orderBy('name')->get();
+        foreach ($subscribers as $subscriber) {
+            $result self::check( $subscriber );
+            if ( $result ){
+              echo $subscriber->name. ' ' . $subscriber->surname. ' - in the list'. PHP_EOL;
+            }else{
+              echo $subscriber->name. ' ' . $subscriber->surname. ' - not in the list'. PHP_EOL;
+            }
         }
     }
     public static function send (Subscribers $subscriber){
@@ -41,16 +42,16 @@ class Subscribers extends Model
 
     }
     public static function sendAll (){
-        $Subscribers= \App\Subscribers::orderBy('name')->get();
-        foreach ($Subscribers as $subscriber) {
+        $subscribers= \App\Subscribers::orderBy('name')->get();
+        foreach ($subscribers as $subscriber) {
             self::send( $subscriber );
                 # code...
         }
     }
 
     public static function setStatusAll ($status){
-        $Subscribers= \App\Subscribers::orderBy('name')->get();
-        foreach ($Subscribers as $subscriber) {
+        $subscribers= \App\Subscribers::orderBy('name')->get();
+        foreach ($subscribers as $subscriber) {
             $subscriber->status=$status;
             $subscriber->save();
         }
